@@ -1,0 +1,217 @@
+@model FerticaStockManagement.Models.StockOutput
+
+@{
+    ViewData["Title"] = "Détails de la sortie";
+}
+
+<div class="page-header">
+
+    <div>
+
+        <h1 class="page-title">
+            <i class="bi bi-box-arrow-up"></i>
+            Détails de la sortie
+        </h1>
+
+        <p class="page-subtitle">
+            Référence : @Model.Reference
+        </p>
+
+    </div>
+
+    <a asp-action="Index"
+       class="btn btn-outline-secondary">
+
+        <i class="bi bi-arrow-left"></i>
+        Retour
+
+    </a>
+
+</div>
+
+
+<div class="row g-4">
+
+    <!-- Informations principales -->
+    <div class="col-lg-8">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header bg-white py-3">
+
+                <h5 class="mb-0">
+                    <i class="bi bi-info-circle"></i>
+                    Informations de la sortie
+                </h5>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row g-4">
+
+                    <!-- Référence -->
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Référence
+                        </small>
+
+                        <strong>
+                            @Model.Reference
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Produit -->
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Produit
+                        </small>
+
+                        <strong>
+                            @(Model.Product?.Name ?? "Produit non défini")
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Code produit -->
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Code produit
+                        </small>
+
+                        <strong>
+                            @(Model.Product?.Code ?? "-")
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Quantité -->
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Quantité sortie
+                        </small>
+
+                        <strong>
+                            @Model.Quantity
+                            @(Model.Product?.Unit ?? "")
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Date -->
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Date de sortie
+                        </small>
+
+                        <strong>
+                            @Model.OutputDate.ToString("dd/MM/yyyy HH:mm")
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Créé par -->
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Créé par
+                        </small>
+
+                        <strong>
+                            @(Model.CreatedBy ?? "-")
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Motif -->
+                    <div class="col-12">
+
+                        <small class="text-muted d-block">
+                            Motif
+                        </small>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.Reason))
+                        {
+                            <p class="mb-0">
+                                @Model.Reason
+                            </p>
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                Aucun motif renseigné.
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Résumé -->
+    <div class="col-lg-4">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header bg-white py-3">
+
+                <h5 class="mb-0">
+                    <i class="bi bi-box-arrow-up"></i>
+                    Résumé
+                </h5>
+
+            </div>
+
+
+            <div class="card-body text-center">
+
+                <small class="text-muted d-block">
+                    Produit
+                </small>
+
+                <div class="fs-5 fw-bold mt-2">
+                    @(Model.Product?.Name ?? "Non défini")
+                </div>
+
+
+                <hr />
+
+
+                <small class="text-muted d-block">
+                    Quantité sortie
+                </small>
+
+                <div class="fs-2 fw-bold mt-2">
+                    @Model.Quantity
+                </div>
+
+                <div class="text-muted">
+                    @(Model.Product?.Unit ?? "")
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,97 @@
+@model FerticaStockManagement.Models.RawMaterial
+
+@{
+    ViewData["Title"] = "Désactiver matière première";
+}
+
+<div class="page-header">
+
+    <div>
+        <h1>Désactiver la matière première</h1>
+        <p>Cette opération conserve l'historique du stock.</p>
+    </div>
+
+    <a asp-action="Index"
+       class="btn btn-light">
+
+        <i class="bi bi-arrow-left"></i>
+        Retour
+
+    </a>
+
+</div>
+
+<div class="content-card">
+
+    <div class="delete-warning">
+
+        <div class="delete-icon">
+            <i class="bi bi-exclamation-triangle"></i>
+        </div>
+
+        <h4>
+            Voulez-vous désactiver cette matière première ?
+        </h4>
+
+        <p class="text-muted">
+            La matière première ne sera pas supprimée définitivement.
+            Elle sera simplement désactivée afin de conserver
+            l'historique des mouvements de stock.
+        </p>
+
+    </div>
+
+    <div class="details-summary">
+
+        <div>
+            <span>Code</span>
+            <strong>@Model.Code</strong>
+        </div>
+
+        <div>
+            <span>Nom</span>
+            <strong>@Model.Name</strong>
+        </div>
+
+        <div>
+            <span>Stock actuel</span>
+            <strong>
+                @Model.CurrentStock @Model.Unit
+            </strong>
+        </div>
+
+        <div>
+            <span>Fournisseur</span>
+            <strong>
+                @(Model.Supplier?.Name ?? "—")
+            </strong>
+        </div>
+
+    </div>
+
+    <form asp-action="Delete"
+          method="post"
+          class="form-actions">
+
+        @Html.AntiForgeryToken()
+
+        <input type="hidden"
+               name="id"
+               value="@Model.Id" />
+
+        <a asp-action="Index"
+           class="btn btn-light">
+            Annuler
+        </a>
+
+        <button type="submit"
+                class="btn btn-danger">
+
+            <i class="bi bi-x-circle"></i>
+            Désactiver
+
+        </button>
+
+    </form>
+
+</div>

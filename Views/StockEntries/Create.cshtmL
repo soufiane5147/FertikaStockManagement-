@@ -1,0 +1,200 @@
+@model FerticaStockManagement.ViewModels.StockEntryViewModel
+
+@{
+    ViewData["Title"] = "Nouvelle entrée de stock";
+}
+
+<div class="page-header mb-4">
+    <div>
+        <h1 class="page-title">
+            <i class="bi bi-box-arrow-in-down"></i>
+            Nouvelle entrée de stock
+        </h1>
+
+        <p class="text-muted">
+            Enregistrer une réception de matière première.
+        </p>
+    </div>
+
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i>
+        Retour
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+
+        <form asp-action="Create" method="post">
+
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+            <div class="row g-3">
+
+                <!-- Référence -->
+
+                <div class="col-md-6">
+                    <label asp-for="Reference"
+                           class="form-label">
+                    </label>
+
+                    <input asp-for="Reference"
+                           class="form-control"
+                           placeholder="Ex : ENT-2026-001" />
+
+                    <span asp-validation-for="Reference"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <!-- Date -->
+
+                <div class="col-md-6">
+                    <label asp-for="EntryDate"
+                           class="form-label">
+                    </label>
+
+                    <input asp-for="EntryDate"
+                           type="datetime-local"
+                           class="form-control" />
+
+                    <span asp-validation-for="EntryDate"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <!-- Matière première -->
+
+                <div class="col-md-6">
+                    <label asp-for="RawMaterialId"
+                           class="form-label">
+                    </label>
+
+                    <select asp-for="RawMaterialId"
+                            asp-items="ViewBag.RawMaterials"
+                            class="form-select">
+
+                        <option value="">
+                            -- Sélectionner une matière première --
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="RawMaterialId"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <!-- Fournisseur -->
+
+                <div class="col-md-6">
+                    <label asp-for="SupplierId"
+                           class="form-label">
+                    </label>
+
+                    <select asp-for="SupplierId"
+                            asp-items="ViewBag.Suppliers"
+                            class="form-select">
+
+                        <option value="">
+                            -- Aucun fournisseur --
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="SupplierId"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <!-- Quantité -->
+
+                <div class="col-md-6">
+                    <label asp-for="Quantity"
+                           class="form-label">
+                    </label>
+
+                    <input asp-for="Quantity"
+                           type="number"
+                           step="0.01"
+                           min="0.001"
+                           class="form-control"
+                           placeholder="Ex : 1000" />
+
+                    <span asp-validation-for="Quantity"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <!-- Prix -->
+
+                <div class="col-md-6">
+                    <label asp-for="UnitPrice"
+                           class="form-label">
+                    </label>
+
+                    <input asp-for="UnitPrice"
+                           type="number"
+                           step="0.01"
+                           min="0"
+                           class="form-control"
+                           placeholder="Ex : 150.00" />
+
+                    <span asp-validation-for="UnitPrice"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <!-- Notes -->
+
+                <div class="col-12">
+                    <label asp-for="Notes"
+                           class="form-label">
+                    </label>
+
+                    <textarea asp-for="Notes"
+                              class="form-control"
+                              rows="4"
+                              placeholder="Informations supplémentaires...">
+                    </textarea>
+
+                    <span asp-validation-for="Notes"
+                          class="text-danger">
+                    </span>
+                </div>
+
+            </div>
+
+            <hr class="my-4" />
+
+            <div class="d-flex justify-content-end gap-2">
+
+                <a asp-action="Index"
+                   class="btn btn-outline-secondary">
+                    Annuler
+                </a>
+
+                <button type="submit"
+                        class="btn btn-success">
+
+                    <i class="bi bi-check-circle"></i>
+                    Enregistrer l'entrée
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,158 @@
+@model FerticaStockManagement.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Connexion";
+}
+
+<div class="auth-page">
+
+    <div class="auth-card">
+
+        <div class="auth-logo">
+            <div class="auth-logo-icon">
+                <i class="bi bi-box-seam"></i>
+            </div>
+
+            <h1>FERTICA</h1>
+            <p>Stock Management</p>
+        </div>
+
+        <div class="auth-header">
+            <h2>Bienvenue</h2>
+            <p>Connectez-vous à votre espace de gestion.</p>
+        </div>
+
+        <form asp-action="Login" method="post">
+
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" asp-for="ReturnUrl" />
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">
+                    Adresse e-mail
+                </label>
+
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-envelope"></i>
+                    </span>
+
+                    <input asp-for="Email"
+                           class="form-control"
+                           placeholder="exemple@fertica.ma"
+                           autocomplete="email" />
+                </div>
+
+                <span asp-validation-for="Email"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">
+                    Mot de passe
+                </label>
+
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-lock"></i>
+                    </span>
+
+                    <input asp-for="Password"
+                           class="form-control"
+                           placeholder="Votre mot de passe"
+                           autocomplete="current-password" />
+
+                    <button type="button"
+                            class="btn btn-outline-secondary"
+                            id="togglePassword">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+
+                <span asp-validation-for="Password"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <div class="form-check mb-4">
+
+                <input asp-for="RememberMe"
+                       class="form-check-input" />
+
+                <label asp-for="RememberMe"
+                       class="form-check-label">
+                    Se souvenir de moi
+                </label>
+
+            </div>
+
+            <button type="submit"
+                    class="btn btn-primary w-100 auth-submit">
+
+                <i class="bi bi-box-arrow-in-right me-2"></i>
+
+                Se connecter
+
+            </button>
+
+        </form>
+
+        <div class="auth-footer">
+            <span>Vous n'avez pas encore de compte ?</span>
+
+            <a asp-action="Register">
+                Créer un compte
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        const togglePassword =
+            document.getElementById("togglePassword");
+
+        const passwordInput =
+            document.getElementById("Password");
+
+        if (togglePassword && passwordInput) {
+
+            togglePassword.addEventListener("click", function () {
+
+                const icon =
+                    this.querySelector("i");
+
+                if (passwordInput.type === "password") {
+
+                    passwordInput.type = "text";
+
+                    icon.classList.remove("bi-eye");
+                    icon.classList.add("bi-eye-slash");
+
+                } else {
+
+                    passwordInput.type = "password";
+
+                    icon.classList.remove("bi-eye-slash");
+                    icon.classList.add("bi-eye");
+
+                }
+
+            });
+
+        }
+
+    </script>
+}

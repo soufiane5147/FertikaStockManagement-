@@ -1,0 +1,140 @@
+@model IEnumerable<FerticaStockManagement.Models.StockOutput>
+
+@{
+    ViewData["Title"] = "Sorties de stock";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">
+            <i class="bi bi-box-arrow-up"></i>
+            Sorties de stock
+        </h1>
+
+        <p class="page-subtitle">
+            Gestion des sorties de produits
+        </p>
+    </div>
+
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i>
+        Nouvelle sortie
+    </a>
+</div>
+
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-body">
+
+        @if (Model.Any())
+        {
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead>
+                        <tr>
+                            <th>Référence</th>
+                            <th>Produit</th>
+                            <th>Quantité</th>
+                            <th>Date de sortie</th>
+                            <th>Motif</th>
+                            <th>Créé par</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var output in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        @output.Reference
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    @(output.Product?.Name ?? "Produit non défini")
+                                </td>
+
+                                <td>
+                                    @output.Quantity
+                                    @(output.Product?.Unit ?? "")
+                                </td>
+
+                                <td>
+                                    @output.OutputDate.ToString("dd/MM/yyyy HH:mm")
+                                </td>
+
+                                <td>
+                                    @if (!string.IsNullOrWhiteSpace(output.Reason))
+                                    {
+                                        @output.Reason
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">
+                                            Aucun motif
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @(output.CreatedBy ?? "-")
+                                </td>
+
+                                <td class="text-end">
+
+                                    <a asp-action="Details"
+                                       asp-route-id="@output.Id"
+                                       class="btn btn-sm btn-outline-primary"
+                                       title="Voir les détails">
+
+                                        <i class="bi bi-eye"></i>
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+
+                <i class="bi bi-box-arrow-up"
+                   style="font-size: 3rem; opacity: .4;"></i>
+
+                <h5 class="mt-3">
+                    Aucune sortie de stock
+                </h5>
+
+                <p class="text-muted">
+                    Aucune sortie de produit n'a encore été enregistrée.
+                </p>
+
+                <a asp-action="Create"
+                   class="btn btn-primary">
+
+                    <i class="bi bi-plus-lg"></i>
+                    Ajouter une sortie
+
+                </a>
+
+            </div>
+        }
+
+    </div>
+
+</div>

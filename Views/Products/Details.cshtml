@@ -1,0 +1,151 @@
+@model FerticaStockManagement.Models.Product
+
+@{
+    ViewData["Title"] = "Détails du produit";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Détails du produit</h1>
+        <p class="page-subtitle">@Model.Name</p>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a asp-action="Edit"
+           asp-route-id="@Model.Id"
+           class="btn btn-primary">
+            <i class="bi bi-pencil"></i>
+            Modifier
+        </a>
+
+        <a asp-action="Index"
+           class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i>
+            Retour
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    Informations générales
+                </h5>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+                        <small class="text-muted">Code</small>
+                        <div class="fw-semibold">
+                            @Model.Code
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <small class="text-muted">Nom</small>
+                        <div class="fw-semibold">
+                            @Model.Name
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <small class="text-muted">Catégorie</small>
+                        <div>
+                            @(Model.Category?.Name ?? "Sans catégorie")
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <small class="text-muted">Unité</small>
+                        <div>
+                            @Model.Unit
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <small class="text-muted">Description</small>
+
+                        <div class="mt-1">
+                            @(string.IsNullOrWhiteSpace(Model.Description)
+                                ? "Aucune description"
+                                : Model.Description)
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Stock</h5>
+            </div>
+
+            <div class="card-body">
+
+                <div class="mb-4">
+                    <small class="text-muted">Stock actuel</small>
+
+                    <div class="fs-3 fw-bold
+                        @(Model.CurrentStock <= Model.MinimumStock
+                            ? "text-danger"
+                            : "text-success")">
+                        @Model.CurrentStock @Model.Unit
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <small class="text-muted">Stock minimum</small>
+
+                    <div class="fw-semibold">
+                        @Model.MinimumStock @Model.Unit
+                    </div>
+                </div>
+
+                <div>
+                    <small class="text-muted">Prix de vente</small>
+
+                    <div class="fs-5 fw-semibold">
+                        @Model.SellingPrice.ToString("N2") DH
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="mb-0">État</h5>
+    </div>
+
+    <div class="card-body">
+
+        @if (Model.IsActive)
+        {
+            <span class="badge bg-success">
+                <i class="bi bi-check-circle me-1"></i>
+                Produit actif
+            </span>
+        }
+        else
+        {
+            <span class="badge bg-secondary">
+                <i class="bi bi-x-circle me-1"></i>
+                Produit inactif
+            </span>
+        }
+
+    </div>
+</div>

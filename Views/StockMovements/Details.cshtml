@@ -1,0 +1,385 @@
+@model FerticaStockManagement.ViewModels.StockMovementViewModel
+
+@{
+    ViewData["Title"] = "Détails du mouvement";
+}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1 class="page-title mb-1">
+                <i class="bi bi-arrow-left-right me-2"></i>
+                Détails du mouvement
+            </h1>
+
+            <p class="text-muted mb-0">
+                Informations détaillées sur le mouvement de stock
+            </p>
+        </div>
+
+        <a asp-action="Index"
+           class="btn btn-outline-secondary">
+
+            <i class="bi bi-arrow-left me-1"></i>
+            Retour
+
+        </a>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <!-- Informations principales -->
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white border-bottom py-3">
+
+                    <h5 class="mb-0">
+                        <i class="bi bi-info-circle me-2"></i>
+                        Informations du mouvement
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row g-4">
+
+                        <!-- Référence -->
+                        <div class="col-md-6">
+
+                            <label class="text-muted small">
+                                Référence
+                            </label>
+
+                            <div class="fw-semibold fs-5">
+                                @Model.Reference
+                            </div>
+
+                        </div>
+
+
+                        <!-- Type -->
+                        <div class="col-md-6">
+
+                            <label class="text-muted small">
+                                Type de mouvement
+                            </label>
+
+                            <div class="mt-1">
+
+                                @if (Model.MovementType == "Entrée")
+                                {
+                                    <span class="badge bg-success fs-6">
+                                        <i class="bi bi-arrow-down-circle me-1"></i>
+                                        Entrée
+                                    </span>
+                                }
+                                else if (Model.MovementType == "Sortie")
+                                {
+                                    <span class="badge bg-danger fs-6">
+                                        <i class="bi bi-arrow-up-circle me-1"></i>
+                                        Sortie
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary fs-6">
+                                        @Model.MovementType
+                                    </span>
+                                }
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Article -->
+                        <div class="col-md-6">
+
+                            <label class="text-muted small">
+                                Article
+                            </label>
+
+                            <div class="fw-semibold">
+                                @Model.ItemName
+                            </div>
+
+                            <small class="text-muted">
+
+                                @if (Model.RawMaterialId.HasValue)
+                                {
+                                    <span>
+                                        <i class="bi bi-box-seam me-1"></i>
+                                        Matière première
+                                    </span>
+                                }
+                                else if (Model.ProductId.HasValue)
+                                {
+                                    <span>
+                                        <i class="bi bi-box me-1"></i>
+                                        Produit
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span>
+                                        Article non spécifié
+                                    </span>
+                                }
+
+                            </small>
+
+                        </div>
+
+
+                        <!-- Quantité -->
+                        <div class="col-md-6">
+
+                            <label class="text-muted small">
+                                Quantité
+                            </label>
+
+                            <div class="fw-bold fs-4">
+                                @Model.Quantity.ToString("N2")
+                            </div>
+
+                        </div>
+
+
+                        <!-- Stock avant -->
+                        <div class="col-md-6">
+
+                            <label class="text-muted small">
+                                Stock avant
+                            </label>
+
+                            <div class="fw-semibold fs-5">
+                                @Model.StockBefore.ToString("N2")
+                            </div>
+
+                        </div>
+
+
+                        <!-- Stock après -->
+                        <div class="col-md-6">
+
+                            <label class="text-muted small">
+                                Stock après
+                            </label>
+
+                            <div class="fw-bold fs-5">
+                                @Model.StockAfter.ToString("N2")
+                            </div>
+
+                        </div>
+
+
+                        <!-- Date -->
+                        <div class="col-md-6">
+
+                            <label class="text-muted small">
+                                Date du mouvement
+                            </label>
+
+                            <div class="fw-semibold">
+
+                                <i class="bi bi-calendar3 me-1"></i>
+
+                                @Model.MovementDate.ToString("dd/MM/yyyy")
+
+                                <br />
+
+                                <small class="text-muted">
+                                    @Model.MovementDate.ToString("HH:mm")
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Créé par -->
+                        <div class="col-md-6">
+
+                            <label class="text-muted small">
+                                Créé par
+                            </label>
+
+                            <div class="fw-semibold">
+
+                                @if (!string.IsNullOrWhiteSpace(Model.CreatedBy))
+                                {
+                                    <i class="bi bi-person me-1"></i>
+                                    @Model.CreatedBy
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Non renseigné
+                                    </span>
+                                }
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Description -->
+                        <div class="col-12">
+
+                            <label class="text-muted small">
+                                Description
+                            </label>
+
+                            <div class="border rounded p-3 bg-light">
+
+                                @if (!string.IsNullOrWhiteSpace(Model.Description))
+                                {
+                                    @Model.Description
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Aucune description.
+                                    </span>
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Résumé -->
+        <div class="col-lg-4">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-header bg-white border-bottom py-3">
+
+                    <h5 class="mb-0">
+                        <i class="bi bi-bar-chart-line me-2"></i>
+                        Résumé
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="text-center mb-4">
+
+                        @if (Model.MovementType == "Entrée")
+                        {
+                            <div class="display-5 text-success">
+                                <i class="bi bi-arrow-down-circle"></i>
+                            </div>
+
+                            <h5 class="mt-2">
+                                Entrée en stock
+                            </h5>
+                        }
+                        else if (Model.MovementType == "Sortie")
+                        {
+                            <div class="display-5 text-danger">
+                                <i class="bi bi-arrow-up-circle"></i>
+                            </div>
+
+                            <h5 class="mt-2">
+                                Sortie de stock
+                            </h5>
+                        }
+                        else
+                        {
+                            <div class="display-5 text-secondary">
+                                <i class="bi bi-arrow-left-right"></i>
+                            </div>
+
+                            <h5 class="mt-2">
+                                Mouvement
+                            </h5>
+                        }
+
+                    </div>
+
+
+                    <div class="border-top pt-3">
+
+                        <div class="d-flex justify-content-between mb-3">
+
+                            <span class="text-muted">
+                                Stock avant
+                            </span>
+
+                            <strong>
+                                @Model.StockBefore.ToString("N2")
+                            </strong>
+
+                        </div>
+
+
+                        <div class="d-flex justify-content-between mb-3">
+
+                            <span class="text-muted">
+                                Quantité
+                            </span>
+
+                            <strong>
+                                @Model.Quantity.ToString("N2")
+                            </strong>
+
+                        </div>
+
+
+                        <div class="d-flex justify-content-between pt-3 border-top">
+
+                            <span class="fw-semibold">
+                                Stock après
+                            </span>
+
+                            <strong class="fs-5">
+                                @Model.StockAfter.ToString("N2")
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card shadow-sm border-0 mt-4">
+
+                <div class="card-body">
+
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary w-100">
+
+                        <i class="bi bi-arrow-left me-1"></i>
+                        Retour à l'historique
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

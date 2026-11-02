@@ -1,0 +1,175 @@
+@model IEnumerable<FerticaStockManagement.Models.RawMaterial>
+
+@{
+    ViewData["Title"] = "Matières premières";
+}
+
+<div class="page-header">
+    <div>
+        <h1>Matières premières</h1>
+        <p>Gestion des matières premières et de leurs stocks.</p>
+    </div>
+
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i>
+        Nouvelle matière première
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        <i class="bi bi-check-circle"></i>
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<div class="content-card">
+
+    <div class="table-toolbar">
+        <div>
+            <h5>Liste des matières premières</h5>
+            <span class="text-muted">
+                @Model.Count() matière(s) première(s)
+            </span>
+        </div>
+
+        <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text"
+                   id="searchInput"
+                   placeholder="Rechercher..." />
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table align-middle" id="rawMaterialsTable">
+
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Nom</th>
+                    <th>Type</th>
+                    <th>Unité</th>
+                    <th>Stock actuel</th>
+                    <th>Stock minimum</th>
+                    <th>Prix unitaire</th>
+                    <th>Fournisseur</th>
+                    <th>Statut</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    var lowStock = item.CurrentStock <= item.MinimumStock;
+
+                    <tr>
+                        <td>
+                            <strong>@item.Code</strong>
+                        </td>
+
+                        <td>@item.Name</td>
+
+                        <td>@item.Type</td>
+
+                        <td>@item.Unit</td>
+
+                        <td>
+                            <span class="@(lowStock ? "text-danger fw-bold" : "")">
+                                @item.CurrentStock
+                            </span>
+                        </td>
+
+                        <td>@item.MinimumStock</td>
+
+                        <td>
+                            @item.UnitPrice.ToString("N2") DH
+                        </td>
+
+                        <td>
+                            @(item.Supplier?.Name ?? "—")
+                        </td>
+
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge badge-success">
+                                    Actif
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-secondary">
+                                    Inactif
+                                </span>
+                            }
+                        </td>
+
+                        <td class="text-end">
+                            <div class="action-buttons">
+
+                                <a asp-action="Details"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-light"
+                                   title="Détails">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-light"
+                                   title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+
+                                @if (item.IsActive)
+{
+    <form asp-action="Delete"
+          asp-route-id="@item.Id"
+          method="post"
+          style="display:inline;"
+          onsubmit="return confirm('Voulez-vous vraiment désactiver cette matière première ?');">
+
+        @Html.AntiForgeryToken()
+
+        <button type="submit"
+                class="btn btn-sm btn-light text-danger"
+                title="Désactiver">
+            <i class="bi bi-trash"></i>
+        </button>
+
+    </form>
+}
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        document.getElementById("searchInput")
+            .addEventListener("keyup", function () {
+
+                const value = this.value.toLowerCase();
+
+                document
+                    .querySelectorAll("#rawMaterialsTable tbody tr")
+                    .forEach(function (row) {
+
+                        row.style.display =
+                            row.innerText.toLowerCase().includes(value)
+                                ? ""
+                                : "none";
+                    });
+            });
+    </script>
+}

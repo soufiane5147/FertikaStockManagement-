@@ -1,0 +1,197 @@
+@model IEnumerable<FerticaStockManagement.Models.Supplier>
+
+@{
+    ViewData["Title"] = "Fournisseurs";
+}
+
+<div class="page-header">
+    <div>
+        <h1>Fournisseurs</h1>
+        <p>Gestion des fournisseurs de matières premières.</p>
+    </div>
+
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-lg me-2"></i>
+        Nouveau fournisseur
+    </a>
+</div>
+
+<div class="card mt-4">
+
+    <div class="card-header p-3">
+        <div class="row align-items-center">
+
+            <div class="col-md-6">
+                <h5 class="mb-0">
+                    <i class="bi bi-truck me-2"></i>
+                    Liste des fournisseurs
+                </h5>
+            </div>
+
+            <div class="col-md-6 mt-2 mt-md-0">
+                <input type="text"
+                       id="supplierSearch"
+                       class="form-control"
+                       placeholder="Rechercher un fournisseur..." />
+            </div>
+
+        </div>
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle mb-0"
+               id="suppliersTable">
+
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Contact</th>
+                    <th>Téléphone</th>
+                    <th>Email</th>
+                    <th>Ville</th>
+                    <th>Statut</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var supplier in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    @supplier.Name
+                                </strong>
+                            </td>
+
+                            <td>
+                                @(string.IsNullOrWhiteSpace(supplier.ContactPerson)
+                                    ? "-"
+                                    : supplier.ContactPerson)
+                            </td>
+
+                            <td>
+                                @(string.IsNullOrWhiteSpace(supplier.Phone)
+                                    ? "-"
+                                    : supplier.Phone)
+                            </td>
+
+                            <td>
+                                @(string.IsNullOrWhiteSpace(supplier.Email)
+                                    ? "-"
+                                    : supplier.Email)
+                            </td>
+
+                            <td>
+                                @(string.IsNullOrWhiteSpace(supplier.City)
+                                    ? "-"
+                                    : supplier.City)
+                            </td>
+
+                            <td>
+                                @if (supplier.IsActive)
+                                {
+                                    <span class="badge bg-success-subtle text-success">
+                                        Actif
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary-subtle text-secondary">
+                                        Inactif
+                                    </span>
+                                }
+                            </td>
+
+                            <td class="text-end">
+
+                                <div class="btn-group">
+
+                                    <a asp-action="Details"
+                                       asp-route-id="@supplier.Id"
+                                       class="btn btn-sm btn-outline-secondary"
+                                       title="Détails">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@supplier.Id"
+                                       class="btn btn-sm btn-outline-primary"
+                                       title="Modifier">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+
+                                    <a asp-action="Delete"
+                                       asp-route-id="@supplier.Id"
+                                       class="btn btn-sm btn-outline-danger"
+                                       title="Supprimer">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7"
+                            class="text-center py-5">
+
+                            <i class="bi bi-truck fs-1 text-muted"></i>
+
+                            <p class="mt-3 mb-0 text-muted">
+                                Aucun fournisseur enregistré.
+                            </p>
+
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script>
+
+        document
+            .getElementById("supplierSearch")
+            .addEventListener("keyup", function () {
+
+                const value =
+                    this.value.toLowerCase();
+
+                const rows =
+                    document.querySelectorAll(
+                        "#suppliersTable tbody tr"
+                    );
+
+                rows.forEach(function (row) {
+
+                    row.style.display =
+                        row.innerText
+                            .toLowerCase()
+                            .includes(value)
+                            ? ""
+                            : "none";
+
+                });
+
+            });
+
+    </script>
+}

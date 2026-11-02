@@ -1,0 +1,251 @@
+@model FerticaStockManagement.Models.StockEntry
+
+@{
+    ViewData["Title"] = "Détails de l'entrée";
+}
+
+<div class="page-header">
+
+    <div>
+        <h1 class="page-title">
+            <i class="bi bi-box-arrow-in-down"></i>
+            Détails de l'entrée
+        </h1>
+
+        <p class="page-subtitle">
+            Référence : @Model.Reference
+        </p>
+    </div>
+
+    <a asp-action="Index"
+       class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i>
+        Retour
+    </a>
+
+</div>
+
+
+<div class="row g-4">
+
+    <!-- Informations -->
+    <div class="col-lg-8">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header bg-white py-3">
+
+                <h5 class="mb-0">
+                    <i class="bi bi-info-circle"></i>
+                    Informations de l'entrée
+                </h5>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row g-4">
+
+                    <!-- Référence -->
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Référence
+                        </small>
+
+                        <strong>
+                            @Model.Reference
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Matière -->
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Matière première
+                        </small>
+
+                        <strong>
+                            @(Model.RawMaterial?.Name ?? "Non définie")
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Code -->
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Code matière
+                        </small>
+
+                        <strong>
+                            @(Model.RawMaterial?.Code ?? "-")
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Fournisseur -->
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Fournisseur
+                        </small>
+
+                        <strong>
+                            @(Model.Supplier?.Name ?? "Non défini")
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Quantité -->
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Quantité
+                        </small>
+
+                        <strong>
+                            @Model.Quantity
+                            @(Model.RawMaterial?.Unit ?? "")
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Prix -->
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Prix unitaire
+                        </small>
+
+                        <strong>
+                            @Model.UnitPrice.ToString("N2") DH
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Total -->
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Montant total
+                        </small>
+
+                        <strong class="fs-5">
+                            @Model.TotalAmount.ToString("N2") DH
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Date -->
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Date d'entrée
+                        </small>
+
+                        <strong>
+                            @Model.EntryDate.ToString("dd/MM/yyyy HH:mm")
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Créé par -->
+                    <div class="col-md-6">
+
+                        <small class="text-muted d-block">
+                            Créé par
+                        </small>
+
+                        <strong>
+                            @(Model.CreatedBy ?? "-")
+                        </strong>
+
+                    </div>
+
+
+                    <!-- Notes -->
+                    <div class="col-12">
+
+                        <small class="text-muted d-block">
+                            Notes
+                        </small>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.Notes))
+                        {
+                            <p class="mb-0">
+                                @Model.Notes
+                            </p>
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                Aucune note.
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Résumé -->
+    <div class="col-lg-4">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header bg-white py-3">
+
+                <h5 class="mb-0">
+                    <i class="bi bi-calculator"></i>
+                    Résumé
+                </h5>
+
+            </div>
+
+            <div class="card-body text-center">
+
+                <small class="text-muted d-block">
+                    Quantité entrée
+                </small>
+
+                <div class="fs-2 fw-bold mt-2">
+                    @Model.Quantity
+                </div>
+
+                <div class="text-muted mb-4">
+                    @(Model.RawMaterial?.Unit ?? "")
+                </div>
+
+
+                <small class="text-muted d-block">
+                    Montant total
+                </small>
+
+                <div class="fs-3 fw-bold mt-2">
+                    @Model.TotalAmount.ToString("N2") DH
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

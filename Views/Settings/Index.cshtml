@@ -1,0 +1,113 @@
+@{
+    ViewData["Title"] = "Paramètres";
+}
+
+<div class="page-header mb-4">
+    <div>
+        <h1 class="page-title">
+            <i class="bi bi-gear"></i>
+            Paramètres
+        </h1>
+
+        <p class="text-muted">
+            Gérer les paramètres de votre compte et de l'application.
+        </p>
+    </div>
+</div>
+
+<div class="row g-4">
+
+    <!-- Profil -->
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+
+                <div class="mb-3">
+                    <i class="bi bi-person-circle fs-1"></i>
+                </div>
+
+                <h5 class="card-title">
+                    Profil
+                </h5>
+
+                <p class="card-text text-muted">
+                    Consulter et modifier vos informations personnelles.
+                </p>
+
+                <a asp-action="Profile"
+                   class="btn btn-success">
+
+                    <i class="bi bi-person"></i>
+                    Gérer le profil
+
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Sécurité -->
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+
+                <div class="mb-3">
+                    <i class="bi bi-shield-lock fs-1"></i>
+                </div>
+
+                <h5 class="card-title">
+                    Sécurité
+                </h5>
+
+                <p class="card-text text-muted">
+                    Gérer le mot de passe et les paramètres de sécurité.
+                </p>
+
+                <a asp-action="Security"
+                   class="btn btn-success">
+
+                    <i class="bi bi-shield-check"></i>
+                    Sécurité
+
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Administration -->
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+
+                <div class="mb-3">
+                    <i class="bi bi-person-gear fs-1"></i>
+                </div>
+
+                <h5 class="card-title">
+                    Administration
+                </h5>
+
+                <p class="card-text text-muted">
+                    Gérer les utilisateurs et les rôles de l'application.
+                </p>
+
+                <a asp-controller="Users"
+                   asp-action="Index"
+                   class="btn btn-success">
+
+                    <i class="bi bi-people"></i>
+                    Utilisateurs
+
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+</div>

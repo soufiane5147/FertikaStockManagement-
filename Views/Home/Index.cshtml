@@ -1,0 +1,402 @@
+@{
+    ViewData["Title"] = "Accueil";
+}
+
+<div class="container py-5">
+
+    <!-- HERO -->
+    <div class="row align-items-center py-5">
+
+        <div class="col-lg-7">
+
+            <span class="badge bg-primary mb-3 px-3 py-2">
+                Gestion industrielle
+            </span>
+
+            <h1 class="display-4 fw-bold mb-3">
+                Fertica
+                <span class="text-primary">Stock Management</span>
+            </h1>
+
+            <p class="lead text-muted mb-4">
+                Une solution centralisée pour gérer les matières premières,
+                les produits, les stocks, les fournisseurs et la production.
+            </p>
+
+            <div class="d-flex flex-wrap gap-2">
+
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a asp-controller="Dashboard"
+                       asp-action="Index"
+                       class="btn btn-primary btn-lg">
+
+                        <i class="bi bi-speedometer2"></i>
+                        Accéder au tableau de bord
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Account"
+                       asp-action="Login"
+                       class="btn btn-primary btn-lg">
+
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        Se connecter
+                    </a>
+
+                    <a asp-controller="Account"
+                       asp-action="Register"
+                       class="btn btn-outline-primary btn-lg">
+
+                        <i class="bi bi-person-plus"></i>
+                        Créer un compte
+                    </a>
+                }
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-5 mt-5 mt-lg-0">
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+
+                    <div class="text-center mb-4">
+                        <div class="display-3">
+                            <i class="bi bi-building"></i>
+                        </div>
+
+                        <h4 class="fw-bold mt-3">
+                            Gestion centralisée
+                        </h4>
+
+                        <p class="text-muted mb-0">
+                            Toutes les informations de votre activité
+                            réunies dans une seule plateforme.
+                        </p>
+                    </div>
+
+                    <div class="row text-center g-3">
+
+                        <div class="col-6">
+                            <div class="p-3 border rounded">
+                                <i class="bi bi-box-seam fs-3"></i>
+                                <div class="fw-semibold mt-2">
+                                    Stock
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="p-3 border rounded">
+                                <i class="bi bi-gear fs-3"></i>
+                                <div class="fw-semibold mt-2">
+                                    Production
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="p-3 border rounded">
+                                <i class="bi bi-truck fs-3"></i>
+                                <div class="fw-semibold mt-2">
+                                    Fournisseurs
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="p-3 border rounded">
+                                <i class="bi bi-bar-chart fs-3"></i>
+                                <div class="fw-semibold mt-2">
+                                    Rapports
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MODULES -->
+    <div class="text-center mb-5">
+
+        <h2 class="fw-bold">
+            Les fonctionnalités principales
+        </h2>
+
+        <p class="text-muted">
+            Une gestion complète des opérations de l'entreprise.
+        </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <!-- STOCK -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card h-100 border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <div class="mb-3">
+                        <i class="bi bi-box-seam fs-1 text-primary"></i>
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Gestion du stock
+                    </h4>
+
+                    <p class="text-muted">
+                        Suivez les entrées, sorties et mouvements
+                        de stock en temps réel.
+                    </p>
+
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-controller="Inventory"
+                           asp-action="Index"
+                           class="btn btn-outline-primary btn-sm">
+                            Voir le stock
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MATIERES PREMIERES -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card h-100 border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <div class="mb-3">
+                        <i class="bi bi-boxes fs-1 text-primary"></i>
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Matières premières
+                    </h4>
+
+                    <p class="text-muted">
+                        Gérez les matières premières, leurs stocks,
+                        leurs prix et leurs fournisseurs.
+                    </p>
+
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-controller="RawMaterials"
+                           asp-action="Index"
+                           class="btn btn-outline-primary btn-sm">
+                            Voir les matières
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUITS -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card h-100 border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <div class="mb-3">
+                        <i class="bi bi-box fs-1 text-primary"></i>
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Produits
+                    </h4>
+
+                    <p class="text-muted">
+                        Gérez le catalogue des produits,
+                        leurs catégories et leurs stocks.
+                    </p>
+
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-controller="Products"
+                           asp-action="Index"
+                           class="btn btn-outline-primary btn-sm">
+                            Voir les produits
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCTION -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card h-100 border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <div class="mb-3">
+                        <i class="bi bi-gear-wide-connected fs-1 text-primary"></i>
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Production
+                    </h4>
+
+                    <p class="text-muted">
+                        Planifiez et suivez les ordres de production
+                        ainsi que les quantités produites.
+                    </p>
+
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-controller="Production"
+                           asp-action="Index"
+                           class="btn btn-outline-primary btn-sm">
+                            Voir la production
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOURNISSEURS -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card h-100 border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <div class="mb-3">
+                        <i class="bi bi-truck fs-1 text-primary"></i>
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Fournisseurs
+                    </h4>
+
+                    <p class="text-muted">
+                        Centralisez les informations et les relations
+                        avec vos fournisseurs.
+                    </p>
+
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-controller="Suppliers"
+                           asp-action="Index"
+                           class="btn btn-outline-primary btn-sm">
+                            Voir les fournisseurs
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RAPPORTS -->
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card h-100 border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <div class="mb-3">
+                        <i class="bi bi-file-earmark-bar-graph fs-1 text-primary"></i>
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Rapports
+                    </h4>
+
+                    <p class="text-muted">
+                        Consultez les statistiques et générez
+                        vos rapports d'activité.
+                    </p>
+
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-controller="Reports"
+                           asp-action="Index"
+                           class="btn btn-outline-primary btn-sm">
+                            Voir les rapports
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CALL TO ACTION -->
+
+    @if (User.Identity?.IsAuthenticated != true)
+    {
+        <div class="card border-0 shadow-sm mt-5">
+
+            <div class="card-body text-center p-5">
+
+                <i class="bi bi-shield-lock fs-1 text-primary"></i>
+
+                <h3 class="fw-bold mt-3">
+                    Prêt à commencer ?
+                </h3>
+
+                <p class="text-muted">
+                    Connectez-vous pour accéder à votre espace
+                    de gestion.
+                </p>
+
+                <a asp-controller="Account"
+                   asp-action="Login"
+                   class="btn btn-primary">
+
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    Se connecter
+
+                </a>
+
+            </div>
+
+        </div>
+    }
+
+</div>

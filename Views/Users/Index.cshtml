@@ -1,0 +1,3 @@
+@model IEnumerable<FerticaStockManagement.Models.ApplicationUser>
+@{ ViewData["Title"] = "Utilisateurs"; }
+<div class="container-fluid"><h1 class="mb-4">Utilisateurs</h1><div class="card shadow-sm"><div class="card-body table-responsive"><table class="table"><thead><tr><th>Prénom</th><th>Nom</th><th>Email</th><th>Téléphone</th><th>Actions</th></tr></thead><tbody>@foreach(var u in Model){<tr><td>@u.FirstName</td><td>@u.LastName</td><td>@u.Email</td><td>@u.PhoneNumber</td><td><a asp-action="Details" asp-route-id="@u.Id" class="btn btn-sm btn-info">Détails</a></td></tr>}</tbody></table></div></div></div>

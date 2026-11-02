@@ -1,0 +1,393 @@
+@model FerticaStockManagement.Models.ProductionOrder
+
+@{
+    ViewData["Title"] = "Détails de l'ordre";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">
+            <i class="bi bi-file-earmark-text"></i>
+            Détails de l'ordre
+        </h1>
+
+        <p class="page-subtitle">
+            Ordre : @Model.OrderNumber
+        </p>
+    </div>
+
+    <a asp-action="Index"
+       class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i>
+        Retour
+    </a>
+</div>
+
+<div class="row g-4">
+
+    <!-- Informations -->
+    <div class="col-lg-8">
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header bg-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-info-circle"></i>
+                    Informations générales
+                </h5>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+                        <small class="text-muted d-block">
+                            Numéro de commande
+                        </small>
+
+                        <strong>
+                            @Model.OrderNumber
+                        </strong>
+                    </div>
+
+                    <div class="col-md-6">
+                        <small class="text-muted d-block">
+                            Produit
+                        </small>
+
+                        <strong>
+                            @(Model.Product?.Name ?? "Non défini")
+                        </strong>
+                    </div>
+
+                    <div class="col-md-6">
+                        <small class="text-muted d-block">
+                            Quantité planifiée
+                        </small>
+
+                        <strong>
+                            @Model.PlannedQuantity
+                            @(Model.Product?.Unit ?? "")
+                        </strong>
+                    </div>
+
+                    <div class="col-md-6">
+                        <small class="text-muted d-block">
+                            Quantité produite
+                        </small>
+
+                        <strong>
+                            @Model.ProducedQuantity
+                            @(Model.Product?.Unit ?? "")
+                        </strong>
+                    </div>
+
+                    <div class="col-md-6">
+                        <small class="text-muted d-block">
+                            Date prévue
+                        </small>
+
+                        <strong>
+                            @Model.PlannedDate.ToString("dd/MM/yyyy")
+                        </strong>
+                    </div>
+
+                    <div class="col-md-6">
+                        <small class="text-muted d-block">
+                            Créé le
+                        </small>
+
+                        <strong>
+                            @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                        </strong>
+                    </div>
+
+                    <div class="col-md-6">
+                        <small class="text-muted d-block">
+                            Date de début
+                        </small>
+
+                        @if (Model.StartDate.HasValue)
+                        {
+                            <strong>
+                                @Model.StartDate.Value.ToString("dd/MM/yyyy HH:mm")
+                            </strong>
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                Pas encore commencée
+                            </span>
+                        }
+                    </div>
+
+                    <div class="col-md-6">
+                        <small class="text-muted d-block">
+                            Date de fin
+                        </small>
+
+                        @if (Model.EndDate.HasValue)
+                        {
+                            <strong>
+                                @Model.EndDate.Value.ToString("dd/MM/yyyy HH:mm")
+                            </strong>
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                Pas encore terminée
+                            </span>
+                        }
+                    </div>
+
+                    <div class="col-12">
+
+                        <small class="text-muted d-block">
+                            Notes
+                        </small>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.Notes))
+                        {
+                            <p class="mb-0">
+                                @Model.Notes
+                            </p>
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                Aucune note.
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Matières premières -->
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header bg-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-box-seam"></i>
+                    Matières premières
+                </h5>
+            </div>
+
+            <div class="card-body">
+
+                @if (Model.ProductionDetails != null &&
+                     Model.ProductionDetails.Any())
+                {
+                    <div class="table-responsive">
+
+                        <table class="table table-hover align-middle">
+
+                            <thead>
+                                <tr>
+                                    <th>Matière première</th>
+                                    <th>Quantité utilisée</th>
+                                    <th>Unité</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var detail in Model.ProductionDetails)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @(detail.RawMaterial?.Name ?? "Non définie")
+                                        </td>
+
+                                        <td>
+                                            @detail.QuantityUsed
+                                        </td>
+
+                                        <td>
+                                            @detail.Unit
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-4">
+
+                        <i class="bi bi-box-seam"
+                           style="font-size: 2.5rem; opacity: .4;"></i>
+
+                        <p class="text-muted mt-2 mb-0">
+                            Aucune matière première associée.
+                        </p>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Actions -->
+    <div class="col-lg-4">
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-header bg-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-activity"></i>
+                    État
+                </h5>
+            </div>
+
+            <div class="card-body text-center">
+
+                @switch (Model.Status)
+                {
+                    case "En attente":
+                        <span class="badge bg-secondary fs-6 px-3 py-2">
+                            En attente
+                        </span>
+                        break;
+
+                    case "Planifiée":
+                        <span class="badge bg-info text-dark fs-6 px-3 py-2">
+                            Planifiée
+                        </span>
+                        break;
+
+                    case "En cours":
+                        <span class="badge bg-warning text-dark fs-6 px-3 py-2">
+                            En cours
+                        </span>
+                        break;
+
+                    case "Terminée":
+                        <span class="badge bg-success fs-6 px-3 py-2">
+                            Terminée
+                        </span>
+                        break;
+
+                    case "Annulée":
+                        <span class="badge bg-danger fs-6 px-3 py-2">
+                            Annulée
+                        </span>
+                        break;
+
+                    default:
+                        <span class="badge bg-secondary fs-6 px-3 py-2">
+                            @Model.Status
+                        </span>
+                        break;
+                }
+
+            </div>
+
+        </div>
+
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header bg-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-lightning-charge"></i>
+                    Actions
+                </h5>
+            </div>
+
+            <div class="card-body">
+
+                @if (Model.Status != "Terminée" &&
+                     Model.Status != "Annulée" &&
+                     Model.Status != "En cours")
+                {
+                    <form asp-action="Start"
+                          method="post"
+                          class="mb-2">
+
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden"
+                               name="id"
+                               value="@Model.Id" />
+
+                        <button type="submit"
+                                class="btn btn-warning w-100">
+
+                            <i class="bi bi-play-fill"></i>
+                            Démarrer la production
+
+                        </button>
+
+                    </form>
+                }
+
+                @if (Model.Status == "En cours")
+                {
+                    <form asp-action="Complete"
+                          method="post"
+                          class="mb-2">
+
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden"
+                               name="id"
+                               value="@Model.Id" />
+
+                        <button type="submit"
+                                class="btn btn-success w-100">
+
+                            <i class="bi bi-check-lg"></i>
+                            Terminer la production
+
+                        </button>
+
+                    </form>
+                }
+
+                @if (Model.Status != "Terminée" &&
+                     Model.Status != "Annulée")
+                {
+                    <form asp-action="Cancel"
+                          method="post"
+                          onsubmit="return confirm('Voulez-vous vraiment annuler cet ordre ?');">
+
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden"
+                               name="id"
+                               value="@Model.Id" />
+
+                        <button type="submit"
+                                class="btn btn-outline-danger w-100">
+
+                            <i class="bi bi-x-lg"></i>
+                            Annuler l'ordre
+
+                        </button>
+
+                    </form>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

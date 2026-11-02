@@ -1,0 +1,4 @@
+@model FerticaStockManagement.Models.ApplicationUser
+@{ ViewData["Title"] = "Détails utilisateur"; }
+<div class="container mt-4"><h1>Détails utilisateur</h1><div class="card shadow-sm"><div class="card-body"><p><strong>Prénom :</strong> @Model.FirstName</p><p><strong>Nom :</strong> @Model.LastName</p><p><strong>Email :</strong> @Model.Email</p><p><strong>Téléphone :</strong> @Model.PhoneNumber</p>
+<form asp-action="Delete" method="post">@Html.AntiForgeryToken()<input type="hidden" name="id" value="@Model.Id" /><button class="btn btn-danger">Supprimer</button><a asp-action="Index" class="btn btn-secondary ms-2">Retour</a></form></div></div></div>

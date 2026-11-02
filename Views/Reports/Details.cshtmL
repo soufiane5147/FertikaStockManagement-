@@ -1,0 +1,474 @@
+@model FerticaStockManagement.Models.Report
+
+@{
+    ViewData["Title"] = "Détails du rapport";
+}
+
+<div class="container-fluid">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1 class="page-title mb-1">
+                <i class="bi bi-file-earmark-bar-graph me-2"></i>
+                @Model.Title
+            </h1>
+
+            <p class="text-muted mb-0">
+                Rapport @Model.Type
+            </p>
+        </div>
+
+        <a asp-action="Index"
+           class="btn btn-outline-secondary">
+
+            <i class="bi bi-arrow-left me-1"></i>
+            Retour
+
+        </a>
+
+    </div>
+
+
+    <!-- Informations générales -->
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-header bg-white border-bottom py-3">
+
+            <h5 class="mb-0">
+                <i class="bi bi-info-circle me-2"></i>
+                Informations générales
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-4">
+
+                <div class="col-md-4">
+
+                    <small class="text-muted">
+                        Titre
+                    </small>
+
+                    <div class="fw-semibold">
+                        @Model.Title
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <small class="text-muted">
+                        Type
+                    </small>
+
+                    <div>
+                        <span class="badge bg-primary">
+                            @Model.Type
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <small class="text-muted">
+                        Généré par
+                    </small>
+
+                    <div class="fw-semibold">
+
+                        @if (!string.IsNullOrWhiteSpace(Model.GeneratedBy))
+                        {
+                            <i class="bi bi-person me-1"></i>
+                            @Model.GeneratedBy
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                Non renseigné
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <small class="text-muted">
+                        Date début
+                    </small>
+
+                    <div class="fw-semibold">
+                        @Model.StartDate.ToString("dd/MM/yyyy")
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <small class="text-muted">
+                        Date fin
+                    </small>
+
+                    <div class="fw-semibold">
+                        @Model.EndDate.ToString("dd/MM/yyyy")
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4">
+
+                    <small class="text-muted">
+                        Date de génération
+                    </small>
+
+                    <div class="fw-semibold">
+                        @Model.GeneratedAt.ToString("dd/MM/yyyy HH:mm")
+                    </div>
+
+                </div>
+
+
+                @if (!string.IsNullOrWhiteSpace(Model.Description))
+                {
+                    <div class="col-12">
+
+                        <small class="text-muted">
+                            Description
+                        </small>
+
+                        <div class="border rounded p-3 bg-light">
+                            @Model.Description
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Statistiques -->
+    <div class="mb-3">
+
+        <h4 class="mb-1">
+            <i class="bi bi-bar-chart-line me-2"></i>
+            Statistiques
+        </h4>
+
+        <p class="text-muted">
+            Résumé des données disponibles dans le système.
+        </p>
+
+    </div>
+
+
+    <div class="row g-4 mb-4">
+
+        <!-- Stock -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+                            <small class="text-muted">
+                                Stock total
+                            </small>
+
+                            <h3 class="mt-2 mb-0">
+                                @Model.TotalStock.ToString("N2")
+                            </h3>
+                        </div>
+
+                        <div class="fs-2 text-success">
+                            <i class="bi bi-boxes"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Production -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+                            <small class="text-muted">
+                                Production totale
+                            </small>
+
+                            <h3 class="mt-2 mb-0">
+                                @Model.TotalProduction.ToString("N2")
+                            </h3>
+                        </div>
+
+                        <div class="fs-2 text-primary">
+                            <i class="bi bi-gear-wide-connected"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Entrées -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+                            <small class="text-muted">
+                                Entrées de stock
+                            </small>
+
+                            <h3 class="mt-2 mb-0">
+                                @Model.TotalStockEntries
+                            </h3>
+                        </div>
+
+                        <div class="fs-2 text-success">
+                            <i class="bi bi-arrow-down-circle"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Sorties -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+                            <small class="text-muted">
+                                Sorties de stock
+                            </small>
+
+                            <h3 class="mt-2 mb-0">
+                                @Model.TotalStockOutputs
+                            </h3>
+                        </div>
+
+                        <div class="fs-2 text-danger">
+                            <i class="bi bi-arrow-up-circle"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Deuxième ligne -->
+    <div class="row g-4 mb-4">
+
+        <!-- Fournisseurs -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <small class="text-muted">
+                                Fournisseurs actifs
+                            </small>
+
+                            <h3 class="mt-2 mb-0">
+                                @Model.TotalSuppliers
+                            </h3>
+                        </div>
+
+                        <i class="bi bi-truck fs-2"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Produits -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <small class="text-muted">
+                                Produits actifs
+                            </small>
+
+                            <h3 class="mt-2 mb-0">
+                                @Model.TotalProducts
+                            </h3>
+                        </div>
+
+                        <i class="bi bi-box-seam fs-2"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Matières premières -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <small class="text-muted">
+                                Matières premières
+                            </small>
+
+                            <h3 class="mt-2 mb-0">
+                                @Model.TotalRawMaterials
+                            </h3>
+                        </div>
+
+                        <i class="bi bi-boxes fs-2"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Ordres de production -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <small class="text-muted">
+                                Ordres de production
+                            </small>
+
+                            <h3 class="mt-2 mb-0">
+                                @Model.TotalProductionOrders
+                            </h3>
+                        </div>
+
+                        <i class="bi bi-clipboard-check fs-2"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Actions -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <h5 class="mb-1">
+                        Rapport généré
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Vous pouvez revenir à la liste des rapports.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary">
+
+                        <i class="bi bi-list me-1"></i>
+                        Tous les rapports
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

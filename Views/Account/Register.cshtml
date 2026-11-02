@@ -1,0 +1,201 @@
+@model FerticaStockManagement.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Créer un compte";
+}
+
+<div class="auth-page">
+
+    <div class="auth-card auth-card-large">
+
+        <div class="auth-logo">
+
+            <div class="auth-logo-icon">
+                <i class="bi bi-person-plus"></i>
+            </div>
+
+            <h1>FERTICA</h1>
+            <p>Stock Management</p>
+
+        </div>
+
+        <div class="auth-header">
+
+            <h2>Créer un compte</h2>
+
+            <p>
+                Créez votre compte pour accéder à la plateforme.
+            </p>
+
+        </div>
+
+        <form asp-action="Register" method="post">
+
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <label asp-for="FirstName"
+                           class="form-label">
+                        Prénom
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            <i class="bi bi-person"></i>
+                        </span>
+
+                        <input asp-for="FirstName"
+                               class="form-control"
+                               placeholder="Votre prénom" />
+
+                    </div>
+
+                    <span asp-validation-for="FirstName"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label asp-for="LastName"
+                           class="form-label">
+                        Nom
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            <i class="bi bi-person"></i>
+                        </span>
+
+                        <input asp-for="LastName"
+                               class="form-control"
+                               placeholder="Votre nom" />
+
+                    </div>
+
+                    <span asp-validation-for="LastName"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="Email"
+                       class="form-label">
+                    Adresse e-mail
+                </label>
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+                        <i class="bi bi-envelope"></i>
+                    </span>
+
+                    <input asp-for="Email"
+                           class="form-control"
+                           placeholder="exemple@fertica.ma"
+                           autocomplete="email" />
+
+                </div>
+
+                <span asp-validation-for="Email"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="Password"
+                       class="form-label">
+                    Mot de passe
+                </label>
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+                        <i class="bi bi-lock"></i>
+                    </span>
+
+                    <input asp-for="Password"
+                           class="form-control"
+                           placeholder="Votre mot de passe"
+                           autocomplete="new-password" />
+
+                </div>
+
+                <span asp-validation-for="Password"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+            <div class="mb-4">
+
+                <label asp-for="ConfirmPassword"
+                       class="form-label">
+                    Confirmer le mot de passe
+                </label>
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+                        <i class="bi bi-lock-fill"></i>
+                    </span>
+
+                    <input asp-for="ConfirmPassword"
+                           class="form-control"
+                           placeholder="Confirmez votre mot de passe"
+                           autocomplete="new-password" />
+
+                </div>
+
+                <span asp-validation-for="ConfirmPassword"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+            <button type="submit"
+                    class="btn btn-primary w-100 auth-submit">
+
+                <i class="bi bi-person-plus me-2"></i>
+
+                Créer mon compte
+
+            </button>
+
+        </form>
+
+        <div class="auth-footer">
+
+            <span>Vous avez déjà un compte ?</span>
+
+            <a asp-action="Login">
+                Se connecter
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

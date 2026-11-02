@@ -1,0 +1,204 @@
+@model FerticaStockManagement.ViewModels.StockOutputViewModel
+
+@{
+    ViewData["Title"] = "Nouvelle sortie de stock";
+}
+
+<div class="page-header">
+
+    <div>
+        <h1 class="page-title">
+            <i class="bi bi-box-arrow-up"></i>
+            Nouvelle sortie de stock
+        </h1>
+
+        <p class="page-subtitle">
+            Enregistrer une sortie de produit
+        </p>
+    </div>
+
+    <a asp-action="Index"
+       class="btn btn-outline-secondary">
+
+        <i class="bi bi-arrow-left"></i>
+        Retour
+
+    </a>
+
+</div>
+
+
+<div class="row justify-content-center">
+
+    <div class="col-xl-8 col-lg-10">
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-header bg-white py-3">
+
+                <h5 class="mb-0">
+                    <i class="bi bi-pencil-square"></i>
+                    Informations de la sortie
+                </h5>
+
+            </div>
+
+
+            <div class="card-body">
+
+                <form asp-action="Create" method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="alert alert-danger">
+                    </div>
+
+
+                    <!-- Référence -->
+                    <div class="mb-3">
+
+                        <label asp-for="Reference"
+                               class="form-label">
+                        </label>
+
+                        <input asp-for="Reference"
+                               class="form-control"
+                               placeholder="Ex : SOR-2026-001" />
+
+                        <span asp-validation-for="Reference"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Produit -->
+                    <div class="mb-3">
+
+                        <label asp-for="ProductId"
+                               class="form-label">
+                        </label>
+
+                        <select asp-for="ProductId"
+                                class="form-select">
+
+                            <option value="">
+                                -- Sélectionner un produit --
+                            </option>
+
+                            @if (ViewBag.Products != null)
+                            {
+                                foreach (var product in ViewBag.Products)
+                                {
+                                    <option value="@product.Id">
+                                        @product.Code - @product.Name
+                                    </option>
+                                }
+                            }
+
+                        </select>
+
+                        <span asp-validation-for="ProductId"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Quantité -->
+                    <div class="mb-3">
+
+                        <label asp-for="Quantity"
+                               class="form-label">
+                        </label>
+
+                        <input asp-for="Quantity"
+                               type="number"
+                               step="0.01"
+                               min="0.01"
+                               class="form-control" />
+
+                        <span asp-validation-for="Quantity"
+                              class="text-danger">
+                        </span>
+
+                        <small class="text-muted">
+                            La quantité ne peut pas dépasser le stock disponible.
+                        </small>
+
+                    </div>
+
+
+                    <!-- Date -->
+                    <div class="mb-3">
+
+                        <label asp-for="OutputDate"
+                               class="form-label">
+                        </label>
+
+                        <input asp-for="OutputDate"
+                               type="datetime-local"
+                               class="form-control" />
+
+                        <span asp-validation-for="OutputDate"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Motif -->
+                    <div class="mb-4">
+
+                        <label asp-for="Reason"
+                               class="form-label">
+                        </label>
+
+                        <textarea asp-for="Reason"
+                                  class="form-control"
+                                  rows="4"
+                                  placeholder="Ex : Vente, livraison, utilisation interne...">
+                        </textarea>
+
+                        <span asp-validation-for="Reason"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- Boutons -->
+                    <div class="d-flex justify-content-end gap-2">
+
+                        <a asp-action="Index"
+                           class="btn btn-outline-secondary">
+                            Annuler
+                        </a>
+
+                        <button type="submit"
+                                class="btn btn-primary">
+
+                            <i class="bi bi-check-lg"></i>
+                            Enregistrer la sortie
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

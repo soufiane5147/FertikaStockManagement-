@@ -1,0 +1,2 @@
+@{ ViewData["Title"] = "Nouveau rôle"; }
+<div class="container mt-4"><h1>Nouveau rôle</h1><form asp-action="Create" method="post">@Html.AntiForgeryToken()<div asp-validation-summary="ModelOnly" class="text-danger"></div><div class="mb-3"><label class="form-label">Nom</label><input name="name" class="form-control" required /></div><button class="btn btn-primary">Créer</button><a asp-action="Index" class="btn btn-secondary ms-2">Annuler</a></form></div>

@@ -1,0 +1,158 @@
+@model IEnumerable<FerticaStockManagement.Models.Category>
+
+@{
+    ViewData["Title"] = "Catégories";
+}
+
+<div class="page-header">
+    <div>
+        <h1>Catégories</h1>
+        <p>Gestion des catégories de produits.</p>
+    </div>
+
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i>
+        Nouvelle catégorie
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        <i class="bi bi-check-circle"></i>
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<div class="content-card">
+
+    <div class="table-toolbar">
+        <div>
+            <h5>Liste des catégories</h5>
+            <span class="text-muted">
+                @Model.Count() catégorie(s)
+            </span>
+        </div>
+
+        <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text"
+                   id="searchInput"
+                   placeholder="Rechercher..." />
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table align-middle" id="categoriesTable">
+
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Produits</th>
+                    <th>Statut</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            <strong>@item.Name</strong>
+                        </td>
+
+                        <td>
+                            @(string.IsNullOrWhiteSpace(item.Description)
+                                ? "—"
+                                : item.Description)
+                        </td>
+
+                        <td>
+                            @(item.Products?.Count ?? 0)
+                        </td>
+
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <span class="badge badge-success">
+                                    Actif
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-secondary">
+                                    Inactif
+                                </span>
+                            }
+                        </td>
+
+                        <td class="text-end">
+                            <div class="action-buttons">
+
+                                <a asp-action="Details"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-light"
+                                   title="Détails">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-light"
+                                   title="Modifier">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+
+                            @if (item.IsActive)
+{
+    <form asp-action="Delete"
+          asp-route-id="@item.Id"
+          method="post"
+          style="display:inline;"
+          onsubmit="return confirm('Voulez-vous vraiment désactiver cette catégorie ?');">
+
+        @Html.AntiForgeryToken()
+
+        <button type="submit"
+                class="btn btn-sm btn-light text-danger"
+                title="Désactiver">
+            <i class="bi bi-trash"></i>
+        </button>
+
+    </form>
+}
+
+                            </div>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        document.getElementById("searchInput")
+            .addEventListener("keyup", function () {
+
+                const value = this.value.toLowerCase();
+
+                document
+                    .querySelectorAll("#categoriesTable tbody tr")
+                    .forEach(function (row) {
+
+                        row.style.display =
+                            row.innerText.toLowerCase().includes(value)
+                                ? ""
+                                : "none";
+                    });
+            });
+    </script>
+}

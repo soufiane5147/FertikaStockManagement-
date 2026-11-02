@@ -1,0 +1,406 @@
+@model FerticaStockManagement.ViewModels.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="dashboard-page">
+
+    <!-- HEADER -->
+    <div class="dashboard-header mb-4">
+
+        <div>
+            <h1 class="dashboard-title">
+                Dashboard
+            </h1>
+
+            <p class="dashboard-subtitle">
+                Vue générale de votre gestion de stock et de production.
+            </p>
+        </div>
+
+        <div>
+            <span class="dashboard-date">
+                <i class="bi bi-calendar3 me-2"></i>
+                @DateTime.Now.ToString("dd MMMM yyyy")
+            </span>
+        </div>
+
+    </div>
+
+
+    <!-- KPI CARDS -->
+    <div class="row g-4 mb-4">
+
+        <!-- Suppliers -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    <i class="bi bi-truck"></i>
+                </div>
+
+                <div class="dashboard-card-content">
+
+                    <span class="dashboard-card-label">
+                        Fournisseurs
+                    </span>
+
+                    <h2>
+                        @Model.TotalSuppliers
+                    </h2>
+
+                    <span class="dashboard-card-info">
+                        Fournisseurs actifs
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Raw Materials -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    <i class="bi bi-boxes"></i>
+                </div>
+
+                <div class="dashboard-card-content">
+
+                    <span class="dashboard-card-label">
+                        Matières premières
+                    </span>
+
+                    <h2>
+                        @Model.TotalRawMaterials
+                    </h2>
+
+                    <span class="dashboard-card-info">
+                        Articles actifs
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Products -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    <i class="bi bi-box"></i>
+                </div>
+
+                <div class="dashboard-card-content">
+
+                    <span class="dashboard-card-label">
+                        Produits
+                    </span>
+
+                    <h2>
+                        @Model.TotalProducts
+                    </h2>
+
+                    <span class="dashboard-card-info">
+                        Produits actifs
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Production -->
+        <div class="col-xl-3 col-md-6">
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    <i class="bi bi-gear-wide-connected"></i>
+                </div>
+
+                <div class="dashboard-card-content">
+
+                    <span class="dashboard-card-label">
+                        Production
+                    </span>
+
+                    <h2>
+                        @Model.TotalProductionOrders
+                    </h2>
+
+                    <span class="dashboard-card-info">
+                        Ordres de production
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- STOCK OVERVIEW -->
+    <div class="row g-4 mb-4">
+
+        <div class="col-lg-8">
+
+            <div class="dashboard-panel">
+
+                <div class="dashboard-panel-header">
+
+                    <div>
+                        <h5>
+                            <i class="bi bi-bar-chart-line me-2"></i>
+                            Vue du stock
+                        </h5>
+
+                        <p>
+                            État actuel des stocks.
+                        </p>
+                    </div>
+
+                    <a asp-controller="Inventory"
+                       asp-action="Index"
+                       class="btn btn-sm btn-outline-primary">
+
+                        Voir l'inventaire
+
+                    </a>
+
+                </div>
+
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+
+                        <div class="stock-summary">
+
+                            <div class="stock-summary-icon">
+                                <i class="bi bi-boxes"></i>
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Stock matières premières
+                                </span>
+
+                                <strong>
+                                    @Model.TotalRawMaterialStock.ToString("N2")
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <div class="stock-summary">
+
+                            <div class="stock-summary-icon">
+                                <i class="bi bi-box"></i>
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Stock produits
+                                </span>
+
+                                <strong>
+                                    @Model.TotalProductStock.ToString("N2")
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOW STOCK -->
+        <div class="col-lg-4">
+
+            <div class="dashboard-panel">
+
+                <div class="dashboard-panel-header">
+
+                    <div>
+
+                        <h5>
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            Alertes stock
+                        </h5>
+
+                        <p>
+                            Articles nécessitant une attention.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="alert-stock-row">
+
+                    <div>
+                        <i class="bi bi-boxes"></i>
+                        Matières premières
+                    </div>
+
+                    <span class="stock-alert-number">
+                        @Model.LowStockRawMaterials
+                    </span>
+
+                </div>
+
+
+                <div class="alert-stock-row">
+
+                    <div>
+                        <i class="bi bi-box"></i>
+                        Produits
+                    </div>
+
+                    <span class="stock-alert-number">
+                        @Model.LowStockProducts
+                    </span>
+
+                </div>
+
+
+                @if (Model.LowStockRawMaterials == 0 &&
+                     Model.LowStockProducts == 0)
+                {
+                    <div class="stock-ok">
+
+                        <i class="bi bi-check-circle"></i>
+
+                        Aucun article en stock critique.
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- QUICK ACTIONS -->
+    <div class="dashboard-panel">
+
+        <div class="dashboard-panel-header">
+
+            <div>
+
+                <h5>
+                    <i class="bi bi-lightning-charge me-2"></i>
+                    Actions rapides
+                </h5>
+
+                <p>
+                    Accédez rapidement aux opérations principales.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+            <a asp-controller="StockEntries"
+               asp-action="Create"
+               class="quick-action">
+
+                <div class="quick-action-icon">
+                    <i class="bi bi-box-arrow-in-down"></i>
+                </div>
+
+                <div>
+                    <strong>Entrée stock</strong>
+                    <span>Ajouter une entrée</span>
+                </div>
+
+            </a>
+
+
+            <a asp-controller="StockOutputs"
+               asp-action="Create"
+               class="quick-action">
+
+                <div class="quick-action-icon">
+                    <i class="bi bi-box-arrow-up"></i>
+                </div>
+
+                <div>
+                    <strong>Sortie stock</strong>
+                    <span>Enregistrer une sortie</span>
+                </div>
+
+            </a>
+
+
+            <a asp-controller="ProductionOrders"
+               asp-action="Create"
+               class="quick-action">
+
+                <div class="quick-action-icon">
+                    <i class="bi bi-clipboard-plus"></i>
+                </div>
+
+                <div>
+                    <strong>Production</strong>
+                    <span>Créer un ordre</span>
+                </div>
+
+            </a>
+
+
+            <a asp-controller="RawMaterials"
+               asp-action="Create"
+               class="quick-action">
+
+                <div class="quick-action-icon">
+                    <i class="bi bi-plus-square"></i>
+                </div>
+
+                <div>
+                    <strong>Matière première</strong>
+                    <span>Ajouter un article</span>
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,97 @@
+@model FerticaStockManagement.ViewModels.CategoryViewModel
+
+@{
+    ViewData["Title"] = "Modifier la catégorie";
+}
+
+<div class="page-header">
+    <div>
+        <h1>Modifier la catégorie</h1>
+        <p>Modifier les informations de la catégorie.</p>
+    </div>
+
+    <a asp-action="Index" class="btn btn-light">
+        <i class="bi bi-arrow-left"></i>
+        Retour
+    </a>
+</div>
+
+<div class="content-card form-card">
+
+    <form asp-action="Edit" method="post">
+
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" asp-for="Id" />
+
+        <div asp-validation-summary="ModelOnly"
+             class="alert alert-danger"></div>
+
+        <div class="row g-4">
+
+            <div class="col-md-8">
+                <label asp-for="Name" class="form-label">
+                    Nom de la catégorie
+                </label>
+
+                <input asp-for="Name"
+                       class="form-control" />
+
+                <span asp-validation-for="Name"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="IsActive" class="form-label">
+                    Statut
+                </label>
+
+                <select asp-for="IsActive"
+                        class="form-select">
+
+                    <option value="true">Actif</option>
+                    <option value="false">Inactif</option>
+
+                </select>
+            </div>
+
+            <div class="col-12">
+                <label asp-for="Description" class="form-label">
+                    Description
+                </label>
+
+                <textarea asp-for="Description"
+                          class="form-control"
+                          rows="4"></textarea>
+
+                <span asp-validation-for="Description"
+                      class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+
+            <a asp-action="Index"
+               class="btn btn-light">
+                Annuler
+            </a>
+
+            <button type="submit"
+                    class="btn btn-primary">
+
+                <i class="bi bi-check-lg"></i>
+                Enregistrer les modifications
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,459 @@
+@model FerticaStockManagement.ViewModels.ProductionViewModel
+
+@{
+    ViewData["Title"] = "Nouvel ordre de production";
+}
+
+<div class="page-header">
+
+    <div>
+        <h1 class="page-title">
+            Nouvel ordre de production
+        </h1>
+
+        <p class="page-subtitle">
+            Créer un ordre de fabrication
+        </p>
+    </div>
+
+    <a asp-action="Index"
+       class="btn btn-outline-secondary">
+
+        <i class="bi bi-arrow-left me-1"></i>
+        Retour
+
+    </a>
+
+</div>
+
+<form asp-action="Create"
+      method="post">
+
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="ModelOnly"
+         class="alert alert-danger">
+    </div>
+
+    <!-- ============================= -->
+    <!-- INFORMATIONS DE PRODUCTION -->
+    <!-- ============================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header">
+            <h5 class="mb-0">
+                <i class="bi bi-clipboard-data me-2"></i>
+                Informations de production
+            </h5>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-4">
+
+                <!-- Numéro -->
+                <div class="col-md-6">
+
+                    <label asp-for="OrderNumber"
+                           class="form-label">
+                    </label>
+
+                    <input asp-for="OrderNumber"
+                           class="form-control"
+                           placeholder="Ex : PROD-2026-001" />
+
+                    <span asp-validation-for="OrderNumber"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <!-- Produit -->
+                <div class="col-md-6">
+
+                    <label asp-for="ProductId"
+                           class="form-label">
+                    </label>
+
+                    <select asp-for="ProductId"
+                            class="form-select">
+
+                        <option value="">
+                            -- Sélectionner un produit --
+                        </option>
+
+                        @foreach (var product in ViewBag.Products)
+                        {
+                            <option value="@product.Id">
+                                @product.Name
+                            </option>
+                        }
+
+                    </select>
+
+                    <span asp-validation-for="ProductId"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <!-- Quantité planifiée -->
+                <div class="col-md-4">
+
+                    <label asp-for="PlannedQuantity"
+                           class="form-label">
+                    </label>
+
+                    <input asp-for="PlannedQuantity"
+                           type="number"
+                           step="0.01"
+                           min="0.01"
+                           class="form-control" />
+
+                    <span asp-validation-for="PlannedQuantity"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <!-- Quantité produite -->
+                <div class="col-md-4">
+
+                    <label asp-for="ProducedQuantity"
+                           class="form-label">
+                    </label>
+
+                    <input asp-for="ProducedQuantity"
+                           type="number"
+                           step="0.01"
+                           min="0"
+                           class="form-control" />
+
+                    <span asp-validation-for="ProducedQuantity"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <!-- Statut -->
+                <div class="col-md-4">
+
+                    <label asp-for="Status"
+                           class="form-label">
+                    </label>
+
+                    <select asp-for="Status"
+                            class="form-select">
+
+                        <option value="En attente">
+                            En attente
+                        </option>
+
+                        <option value="Planifiée">
+                            Planifiée
+                        </option>
+
+                        <option value="En cours">
+                            En cours
+                        </option>
+
+                        <option value="Terminée">
+                            Terminée
+                        </option>
+
+                        <option value="Annulée">
+                            Annulée
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="Status"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <!-- Date prévue -->
+                <div class="col-md-4">
+
+                    <label asp-for="PlannedDate"
+                           class="form-label">
+                    </label>
+
+                    <input asp-for="PlannedDate"
+                           type="date"
+                           class="form-control" />
+
+                    <span asp-validation-for="PlannedDate"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <!-- Date début -->
+                <div class="col-md-4">
+
+                    <label asp-for="StartDate"
+                           class="form-label">
+                    </label>
+
+                    <input asp-for="StartDate"
+                           type="date"
+                           class="form-control" />
+
+                    <span asp-validation-for="StartDate"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <!-- Date fin -->
+                <div class="col-md-4">
+
+                    <label asp-for="EndDate"
+                           class="form-label">
+                    </label>
+
+                    <input asp-for="EndDate"
+                           type="date"
+                           class="form-control" />
+
+                    <span asp-validation-for="EndDate"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <!-- Notes -->
+                <div class="col-12">
+
+                    <label asp-for="Notes"
+                           class="form-label">
+                    </label>
+
+                    <textarea asp-for="Notes"
+                              class="form-control"
+                              rows="4"
+                              placeholder="Remarques concernant la production...">
+                    </textarea>
+
+                    <span asp-validation-for="Notes"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- MATIÈRES PREMIÈRES -->
+    <!-- ============================= -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header d-flex justify-content-between align-items-center">
+
+            <div>
+                <h5 class="mb-0">
+                    <i class="bi bi-box-seam me-2"></i>
+                    Matières premières
+                </h5>
+
+                <small class="text-muted">
+                    Matières nécessaires à cette production
+                </small>
+            </div>
+
+            <button type="button"
+                    class="btn btn-outline-primary btn-sm"
+                    onclick="addMaterial()">
+
+                <i class="bi bi-plus-lg me-1"></i>
+                Ajouter
+
+            </button>
+
+        </div>
+
+        <div class="card-body">
+
+            <div id="materials-container">
+
+                <!-- Une ligne sera ajoutée par JavaScript -->
+
+            </div>
+
+            <div id="no-materials"
+                 class="text-center py-4 text-muted">
+
+                <i class="bi bi-box fs-2"></i>
+
+                <p class="mt-2 mb-0">
+                    Aucune matière première ajoutée.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- BOUTONS -->
+    <!-- ============================= -->
+
+    <div class="d-flex justify-content-end gap-2">
+
+        <a asp-action="Index"
+           class="btn btn-outline-secondary">
+
+            Annuler
+
+        </a>
+
+        <button type="submit"
+                class="btn btn-primary">
+
+            <i class="bi bi-check-lg me-1"></i>
+            Créer l'ordre
+
+        </button>
+
+    </div>
+
+</form>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        let materialIndex = 0;
+
+        function addMaterial() {
+
+            const container =
+                document.getElementById("materials-container");
+
+            const emptyMessage =
+                document.getElementById("no-materials");
+
+            emptyMessage.style.display = "none";
+
+            const row = document.createElement("div");
+
+            row.className =
+                "row g-3 align-items-end mb-3 material-row";
+
+            row.innerHTML = `
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Matière première
+                    </label>
+
+                    <select
+                        name="Materials[${materialIndex}].RawMaterialId"
+                        class="form-select">
+
+                        <option value="">
+                            -- Sélectionner une matière --
+                        </option>
+
+                        @foreach (var material in ViewBag.RawMaterials)
+                        {
+                            <text>
+                                <option value="@material.Id">
+                                    @material.Name
+                                    (@material.Unit)
+                                </option>
+                            </text>
+                        }
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+                        Quantité utilisée
+                    </label>
+
+                    <input
+                        type="number"
+                        name="Materials[${materialIndex}].QuantityUsed"
+                        class="form-control"
+                        step="0.01"
+                        min="0.01"
+                        placeholder="0.00" />
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <label class="form-label">
+                        Unité
+                    </label>
+
+                    <input
+                        type="text"
+                        name="Materials[${materialIndex}].Unit"
+                        class="form-control"
+                        value="kg" />
+
+                </div>
+
+                <div class="col-md-1">
+
+                    <button
+                        type="button"
+                        class="btn btn-outline-danger w-100"
+                        onclick="removeMaterial(this)">
+
+                        <i class="bi bi-trash"></i>
+
+                    </button>
+
+                </div>
+
+            `;
+
+            container.appendChild(row);
+
+            materialIndex++;
+        }
+
+
+        function removeMaterial(button) {
+
+            const row =
+                button.closest(".material-row");
+
+            row.remove();
+
+            const container =
+                document.getElementById("materials-container");
+
+            const emptyMessage =
+                document.getElementById("no-materials");
+
+            if (container.children.length === 0) {
+
+                emptyMessage.style.display = "block";
+
+            }
+        }
+
+    </script>
+}

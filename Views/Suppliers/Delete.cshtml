@@ -1,0 +1,63 @@
+@model FerticaStockManagement.Models.Supplier
+
+@{
+    ViewData["Title"] = "Désactiver fournisseur";
+}
+
+<div class="page-header">
+
+    <div>
+        <h1>Désactiver le fournisseur</h1>
+        <p>Cette action désactivera le fournisseur.</p>
+    </div>
+
+</div>
+
+<div class="card mt-4">
+
+    <div class="card-body p-4">
+
+        <div class="alert alert-warning">
+
+            <i class="bi bi-exclamation-triangle me-2"></i>
+
+            Voulez-vous vraiment désactiver le fournisseur
+            <strong>@Model.Name</strong> ?
+
+        </div>
+
+        <p class="text-muted">
+            Le fournisseur ne sera pas supprimé définitivement.
+            Il sera simplement marqué comme inactif.
+        </p>
+
+        <form asp-action="Delete"
+              method="post">
+
+            @Html.AntiForgeryToken()
+
+            <input type="hidden"
+                   asp-for="Id" />
+
+            <div class="d-flex gap-2">
+
+                <button type="submit"
+                        class="btn btn-danger">
+
+                    <i class="bi bi-trash me-2"></i>
+                    Désactiver
+
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-light">
+                    Annuler
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
